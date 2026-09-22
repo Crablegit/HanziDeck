@@ -16,6 +16,8 @@ import {
   Sparkles,
   Sliders,
   Trash2,
+  BookOpen,
+  Target,
 } from 'lucide-react';
 import { COLOR_PROFILES, applyThemeToDocument, getThemeById } from '@/lib/themes';
 import {
@@ -26,6 +28,7 @@ import {
   getDailyStackQueue,
   getDailyStreak,
 } from '@/lib/storage';
+import { HSK_LEVEL_INFOS } from '@/lib/dictionaryData';
 import {
   getGeminiApiKeyFromCookie,
   saveGeminiApiKeyToCookie,
@@ -159,6 +162,90 @@ export default function SettingsPage() {
           <span>{t.settings.title}</span>
         </h1>
         <p className="text-sm text-theme-text-muted">{t.settings.subtitle}</p>
+      </div>
+
+      {/* ================= 0. HSK BASELINE & DAILY GOAL ================= */}
+      <div className="liquid-glass rounded-3xl p-6 sm:p-8 shadow-glass border border-white/15 space-y-6">
+        <div className="flex items-center gap-2.5">
+          <div className="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-300 flex items-center justify-center border border-sky-500/30">
+            <Target className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 className="font-bold text-white text-base sm:text-lg">
+              Mục tiêu bài học & Trình độ HSK 3.0
+            </h2>
+            <p className="text-xs text-theme-text-muted">
+              Cấu hình số từ cần học mỗi ngày và trình độ HSK nền tảng để tự động lọc từ mới trong đoạn văn
+            </p>
+          </div>
+        </div>
+
+        {/* Daily Goal Selection */}
+        <div className="space-y-3">
+          <label className="text-xs font-semibold text-white/80 block">
+            Mục tiêu từ vựng mỗi ngày:
+          </label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {[5, 10, 15, 20, 30].map((goal) => (
+              <button
+                key={goal}
+                type="button"
+                onClick={() => {
+                  const updated = saveStoredSettings({ daily_goal: goal });
+                  setSettings(updated);
+                  window.dispatchEvent(new Event('hanzideck_settings_changed'));
+                }}
+                className={`py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all ${
+                  settings.daily_goal === goal
+                    ? 'liquid-glass-btn text-white'
+                    : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                }`}
+              >
+                {goal} từ / ngày
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* HSK Baseline Selection */}
+        <div className="space-y-3 pt-2 border-t border-white/5">
+          <label className="text-xs font-semibold text-white/80 block">
+            Trình độ HSK 3.0 đã nắm vững (Baseline):
+          </label>
+          <p className="text-[11px] text-theme-text-muted">
+            Khi bạn chọn cấp HSK nào, hệ thống sẽ tự động coi tất cả từ vựng ở cấp đó và các cấp dưới là <strong>ĐÃ BIẾT</strong>. Nhờ đó, công cụ lọc từ mới trong đoạn văn sẽ chỉ highlight các từ chưa biết thuộc cấp cao hơn!
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {HSK_LEVEL_INFOS.map((info) => {
+              const isSelected = (settings.user_hsk_baseline || 0) === info.level;
+              return (
+                <button
+                  key={info.level}
+                  type="button"
+                  onClick={() => {
+                    const updated = saveStoredSettings({ user_hsk_baseline: info.level });
+                    setSettings(updated);
+                    window.dispatchEvent(new Event('hanzideck_settings_changed'));
+                  }}
+                  className={`p-3 rounded-xl border text-left flex items-center justify-between text-xs transition-all ${
+                    isSelected
+                      ? 'bg-sky-500/20 border-sky-400 text-white shadow-sm'
+                      : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10'
+                  }`}
+                >
+                  <div>
+                    <span className="font-semibold block text-white">{info.label}</span>
+                    <span className="text-[10px] opacity-60">{info.countDesc}</span>
+                  </div>
+                  {isSelected && (
+                    <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* ================= 1. GEMINI API KEY SECTION ================= */}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="appleDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e222d"/>
+      <stop offset="100%" stop-color="#0b0d13"/>
+    </linearGradient>
+    <linearGradient id="goldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Apple-style Squircle background -->
+  <rect x="4" y="4" width="120" height="120" rx="30" ry="30" fill="url(#appleDark)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2"/>
+  
+  <!-- Subtle inner border -->
+  <rect x="8" y="8" width="112" height="112" rx="26" ry="26" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+
+  <!-- Chinese character "字" (Zi) in high-contrast elegant typography -->
+  <text x="64" y="86" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'STHeiti', 'Songti SC', 'Noto Sans SC', sans-serif" font-size="68" font-weight="bold" fill="url(#goldGlow)" text-anchor="middle">字</text>
+</svg>

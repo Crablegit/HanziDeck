@@ -53,6 +53,7 @@ export interface UserProfile {
   email?: string;
   display_name?: string;
   daily_goal: number;
+  user_hsk_baseline?: number; // 0 (beginner) to 6
   theme_id: string;
   glass_blur: number; // in px: 0 to 30
   glass_opacity: number; // in percent: 40 to 95

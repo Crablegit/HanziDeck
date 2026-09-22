@@ -193,6 +193,56 @@ ${spokenTranscript ? `Văn bản ghi nhận từ giọng nói của học viên:
   });
 }
 
+/**
+ * Tra cứu Chữ Hán / Từ vựng / Thành ngữ nâng cao bằng AI Gemini 3.5 Flash Lite
+ */
+export async function lookupWordWithGemini(
+  query: string,
+  apiKey: string,
+  uiLanguage: Language = 'vi'
+): Promise<any | null> {
+  const systemInstruction = `Bạn là từ điển Hán ngữ chuyên sâu và chuẩn HSK 3.0.
+Khi người dùng nhập một từ/chữ Hán/thành ngữ hoặc từ tiếng Việt, hãy tra cứu đầy đủ thông tin chi tiết.
+BẮT BUỘC trả về JSON thuần túy (không bọc text ngoài JSON):
+{
+  "hanzi": "chữ Hán chuẩn giản thể",
+  "pinyin": "pinyin có dấu đầy đủ thanh điệu",
+  "han_viet": "Âm Hán Việt",
+  "meaning_vi": "Nghĩa tiếng Việt ngắn gọn, xúc tích",
+  "meaning_en": "Nghĩa tiếng Anh",
+  "radical": "Bộ thủ cấu tạo (tên bộ thủ)",
+  "stroke_count": 10,
+  "hsk_level": 1,
+  "examples": [
+    {
+      "hanzi": "câu ví dụ tiếng Trung",
+      "pinyin": "pinyin câu ví dụ",
+      "meaning_vi": "nghĩa tiếng Việt câu ví dụ"
+    }
+  ]
+}`;
+
+  const prompt = `Tra cứu từ vựng tiếng Trung sau: "${query}"`;
+  try {
+    const raw = await callGeminiApi(apiKey, prompt, systemInstruction);
+    const parsed = parseJsonSafe<any>(raw, null);
+    if (parsed && parsed.hanzi) {
+      return {
+        ...parsed,
+        id: `ai-lookup-${Date.now()}`,
+        deck_id: 'deck-hsk1',
+        stroke_count: Number(parsed.stroke_count) || 8,
+        hsk_level: Number(parsed.hsk_level) || 1,
+        examples: parsed.examples || [],
+      };
+    }
+    return null;
+  } catch (err) {
+    console.error('Gemini word lookup failed:', err);
+    throw err;
+  }
+}
+
 function parseJsonSafe<T>(raw: string, fallback: T): T {
   try {
     let clean = raw.trim();
@@ -206,3 +256,4 @@ function parseJsonSafe<T>(raw: string, fallback: T): T {
     return fallback;
   }
 }
+

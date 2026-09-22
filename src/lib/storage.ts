@@ -1,5 +1,5 @@
 import { Card, Deck, UserProfile, CardProgress } from '@/types';
-import { INITIAL_CARDS, INITIAL_DECKS } from './dictionaryData';
+import { INITIAL_CARDS, INITIAL_DECKS, getHskBaselineWords } from './dictionaryData';
 import { supabase, isSupabaseConfigured } from './supabase';
 
 const STORAGE_KEYS = {
@@ -9,6 +9,7 @@ const STORAGE_KEYS = {
   PROGRESS: 'hanzideck_progress',
   SETTINGS: 'hanzideck_settings',
   STREAK: 'hanzideck_streak',
+  ONBOARDING: 'hanzideck_onboarding_done',
 };
 
 export interface DailyStreakData {
@@ -19,7 +20,8 @@ export interface DailyStreakData {
 
 export const DEFAULT_PROFILE: UserProfile = {
   daily_goal: 10,
-  theme_id: 'imperial-jade',
+  user_hsk_baseline: 0,
+  theme_id: 'minimalist-slate',
   glass_blur: 16,
   glass_opacity: 80,
   language: 'vi',
@@ -252,12 +254,26 @@ export function saveStoredSettings(profile: Partial<UserProfile>): UserProfile {
   return updated;
 }
 
-// ================= KNOWN WORDS SET =================
+// ================= KNOWN WORDS SET (AUTO HSK 3.0 BASELINE) =================
 export function getKnownWordsSet(): Set<string> {
+  const settings = getStoredSettings();
+  const baselineWords = getHskBaselineWords(settings.user_hsk_baseline || 0);
   const cards = getStoredCards();
-  const words = new Set<string>();
+  const words = new Set<string>(baselineWords);
   for (const card of cards) {
     words.add(card.hanzi);
   }
   return words;
 }
+
+// ================= ONBOARDING =================
+export function hasCompletedOnboarding(): boolean {
+  if (typeof window === 'undefined') return true;
+  return localStorage.getItem(STORAGE_KEYS.ONBOARDING) === 'true';
+}
+
+export function setOnboardingCompleted(completed: boolean): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(STORAGE_KEYS.ONBOARDING, completed ? 'true' : 'false');
+}
+
