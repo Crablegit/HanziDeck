@@ -216,36 +216,31 @@ export default function DeckDetailPage({ params }: { params: Promise<{ id: strin
                   key={card.id}
                   className="liquid-glass-card rounded-2xl p-4 sm:p-5 border border-white/10 shadow-glass flex items-center justify-between gap-4"
                 >
-                  <div className="flex items-center gap-4 sm:gap-6 flex-1 min-w-0">
-                    {/* Big Character */}
-                    <div className="w-14 h-14 rounded-xl liquid-glass flex items-center justify-center font-bold text-2xl text-white font-serif border border-theme-border shrink-0">
-                      {card.hanzi}
-                    </div>
-
-                    {/* Character Info */}
-                    <div className="space-y-1 flex-1 min-w-0">
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="text-base font-bold font-mono text-amber-300">
-                          {card.pinyin}
+                  <div className="space-y-1.5 flex-1 min-w-0">
+                    <div className="flex items-baseline gap-3 flex-wrap">
+                      <span className="text-2xl sm:text-3xl font-bold text-white font-chinese tracking-wide">
+                        {card.hanzi}
+                      </span>
+                      <span className="text-base font-semibold font-mono text-amber-300">
+                        {card.pinyin}
+                      </span>
+                      {card.han_viet && (
+                        <span className="text-xs px-2 py-0.5 rounded-md bg-white/5 text-white/70 font-medium">
+                          {card.han_viet}
                         </span>
-                        {card.han_viet && (
-                          <span className="text-xs px-2 py-0.5 rounded-md bg-white/10 text-theme-text-muted font-medium">
-                            {card.han_viet}
-                          </span>
-                        )}
-                        {card.hsk_level && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
-                            HSK {card.hsk_level}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-white font-medium truncate">{card.meaning_vi}</p>
-                      {card.examples && card.examples[0] && (
-                        <p className="text-xs text-theme-text-muted truncate hidden sm:block">
-                          Ví dụ: {card.examples[0].hanzi} - {card.examples[0].meaning_vi}
-                        </p>
+                      )}
+                      {card.hsk_level && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/80 font-bold border border-white/10">
+                          HSK {card.hsk_level}
+                        </span>
                       )}
                     </div>
+                    <p className="text-sm text-white/90 font-medium">{card.meaning_vi}</p>
+                    {card.examples && card.examples[0] && (
+                      <p className="text-xs text-white/50 truncate hidden sm:block">
+                        Ví dụ: {card.examples[0].hanzi} — {card.examples[0].meaning_vi}
+                      </p>
+                    )}
                   </div>
 
                   {/* Right Actions */}

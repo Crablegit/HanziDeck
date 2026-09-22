@@ -309,18 +309,16 @@ export default function DailyStackPage() {
                     key={card.id}
                     className="liquid-glass-card rounded-2xl p-4 border border-white/15 shadow-glass flex items-center justify-between gap-3"
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-11 h-11 rounded-xl liquid-glass flex items-center justify-center font-bold text-xl text-white font-serif border border-theme-border shrink-0">
-                        {card.hanzi}
+                    <div className="space-y-0.5 min-w-0 flex-1">
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        <span className="font-bold text-lg text-white font-chinese tracking-wide">
+                          {card.hanzi}
+                        </span>
+                        <span className="text-xs font-semibold font-mono text-amber-300">
+                          {card.pinyin}
+                        </span>
                       </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-bold font-mono text-amber-300">
-                            {card.pinyin}
-                          </span>
-                        </div>
-                        <p className="text-xs text-white truncate">{card.meaning_vi}</p>
-                      </div>
+                      <p className="text-xs text-white/70 truncate">{card.meaning_vi}</p>
                     </div>
 
                     <div className="flex items-center gap-1 shrink-0">

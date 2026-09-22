@@ -189,35 +189,35 @@ export default function DictionaryPage() {
                 onClick={() => setSelectedWord(card)}
                 className="liquid-glass-card rounded-2xl p-4 sm:p-5 border border-white/10 shadow-glass flex flex-col justify-between gap-3.5 cursor-pointer group"
               >
-                <div className="flex items-start gap-4">
-                  {/* Big Character Box */}
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center font-bold text-3xl text-white font-chinese border border-white/10 shrink-0 group-hover:border-sky-400/40 transition-colors">
-                    {card.hanzi}
-                  </div>
-
-                  <div className="space-y-1 flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-base font-bold font-mono text-sky-300">{card.pinyin}</span>
-                      {card.han_viet && (
-                        <span className="text-xs px-2 py-0.5 rounded-md bg-white/5 text-white/70">
-                          {card.han_viet}
-                        </span>
-                      )}
-                      {card.hsk_level && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-white/80 font-bold border border-white/10">
-                          HSK {card.hsk_level}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm font-semibold text-white leading-snug truncate">
-                      {card.meaning_vi}
-                    </p>
-                    {card.radical && (
-                      <p className="text-xs text-white/50 truncate">
-                        Bộ thủ: <span className="text-white/80">{card.radical}</span>
-                      </p>
+                <div className="space-y-2 flex-1 min-w-0">
+                  <div className="flex items-baseline gap-3 flex-wrap">
+                    <span className="text-2xl sm:text-3xl font-bold text-white font-chinese tracking-wide group-hover:text-sky-300 transition-colors">
+                      {card.hanzi}
+                    </span>
+                    <span className="text-base font-semibold font-mono text-amber-300">
+                      {card.pinyin}
+                    </span>
+                    {card.han_viet && (
+                      <span className="text-xs px-2 py-0.5 rounded-md bg-white/5 text-white/70 font-medium">
+                        {card.han_viet}
+                      </span>
+                    )}
+                    {card.hsk_level && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/80 font-bold border border-white/10">
+                        HSK {card.hsk_level}
+                      </span>
                     )}
                   </div>
+
+                  <p className="text-sm font-medium text-white/90 leading-snug line-clamp-2">
+                    {card.meaning_vi}
+                  </p>
+
+                  {card.radical && (
+                    <p className="text-xs text-white/50 truncate">
+                      Bộ thủ: <span className="text-white/70">{card.radical}</span>
+                    </p>
+                  )}
                 </div>
 
                 {/* Bottom Row */}

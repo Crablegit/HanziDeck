@@ -68,32 +68,33 @@ export default function WordModal({ card, isOpen, onClose, onAddedToDeck }: Word
         </button>
 
         {/* Word Header */}
-        <div className="flex items-start gap-4 border-b border-theme-border/50 pb-5">
-          <div className="w-20 h-20 rounded-2xl liquid-glass flex items-center justify-center font-bold text-4xl sm:text-5xl text-white font-serif border border-theme-border shadow-inner shrink-0">
-            {card.hanzi}
+        <div className="border-b border-white/10 pb-5 space-y-2.5 pr-8">
+          <div className="flex items-baseline gap-3 flex-wrap">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white font-chinese tracking-wide">
+              {card.hanzi}
+            </h2>
+            <span className="text-xl sm:text-2xl font-semibold font-mono text-amber-300">
+              {card.pinyin}
+            </span>
+            <AudioPlayer text={card.hanzi} audioUrl={card.audio_url} size="sm" />
           </div>
-          <div className="flex flex-col gap-1 flex-1 pr-6">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold font-mono text-amber-300">{card.pinyin}</span>
-              <AudioPlayer text={card.hanzi} audioUrl={card.audio_url} size="sm" />
-            </div>
+
+          <div className="flex items-center gap-3 flex-wrap text-xs">
             {card.han_viet && (
-              <span className="text-xs text-theme-text-muted">
+              <span className="text-white/70">
                 Âm Hán Việt: <strong className="text-white font-medium">{card.han_viet}</strong>
               </span>
             )}
-            <div className="flex items-center gap-2 mt-1">
-              {card.hsk_level && (
-                <span className="px-2 py-0.5 rounded-md bg-theme-primary/30 border border-theme-border text-[11px] font-bold text-white">
-                  HSK {card.hsk_level}
-                </span>
-              )}
-              {card.stroke_count && (
-                <span className="text-[11px] text-theme-text-muted opacity-80">
-                  {card.stroke_count} nét viết
-                </span>
-              )}
-            </div>
+            {card.hsk_level && (
+              <span className="px-2.5 py-0.5 rounded-full bg-white/10 border border-white/10 text-[11px] font-semibold text-white/90">
+                HSK {card.hsk_level}
+              </span>
+            )}
+            {card.stroke_count && (
+              <span className="text-white/50 text-[11px]">
+                {card.stroke_count} nét viết
+              </span>
+            )}
           </div>
         </div>
 
