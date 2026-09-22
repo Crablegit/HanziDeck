@@ -32,9 +32,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Chinese character refined font rendering */
+/* Chinese character refined font rendering - Apple Hei/Sans standard */
 .font-chinese {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "STHeiti", "Hiragino Sans GB", "Songti SC", "Noto Sans SC", serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ================= APPLE LIQUID GLASS STYLES ================= */
@@ -65,17 +67,20 @@ body {
 }
 
 .liquid-glass-input {
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--theme-border);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--theme-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
   transition: all 0.2s ease;
 }
 
 .liquid-glass-input:focus {
   outline: none;
-  border-color: var(--theme-primary);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .liquid-glass-btn {

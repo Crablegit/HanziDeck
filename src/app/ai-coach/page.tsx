@@ -185,8 +185,8 @@ export default function AiCoachPage() {
               rows={4}
               value={grammarInput}
               onChange={(e) => setGrammarInput(e.target.value)}
-              placeholder="Nhập câu tiếng Trung của bạn tại đây..."
-              className="w-full px-4 py-3 rounded-2xl liquid-glass-input text-base font-serif leading-relaxed resize-none"
+              placeholder="Nhập câu tiếng Trung của bạn tại đây (ví dụ: 我喜欢学汉语)..."
+              className="w-full px-4 py-3.5 rounded-2xl liquid-glass-input text-base font-sans font-chinese leading-relaxed resize-none placeholder:text-white/30 outline-none"
             />
 
             <div className="flex items-center justify-between gap-3 pt-1">
@@ -225,7 +225,7 @@ export default function AiCoachPage() {
                 </div>
 
                 <div className="p-5 rounded-2xl bg-black/25 border border-theme-border/40 space-y-1.5">
-                  <p className="text-2xl font-serif font-bold text-emerald-200">
+                  <p className="text-2xl font-chinese font-bold text-emerald-200">
                     {grammarResult.correctedText}
                   </p>
                   {grammarResult.pinyin && (
@@ -289,7 +289,7 @@ export default function AiCoachPage() {
                           </span>
                           <AudioPlayer text={enh.sentence} size="sm" />
                         </div>
-                        <p className="text-lg font-serif font-bold text-white">{enh.sentence}</p>
+                        <p className="text-lg font-chinese font-bold text-white">{enh.sentence}</p>
                         <p className="text-xs font-mono text-amber-300">{enh.pinyin}</p>
                         <p className="text-xs text-theme-text-muted">{enh.meaning}</p>
                       </div>
@@ -313,8 +313,8 @@ export default function AiCoachPage() {
               type="text"
               value={pronunciationInput}
               onChange={(e) => setPronunciationInput(e.target.value)}
-              placeholder="ví dụ: 你好，一瓶水，不客气..."
-              className="w-full px-4 py-3 rounded-2xl liquid-glass-input text-lg font-serif"
+              placeholder="ví dụ: 学汉语 / 你好 / 一瓶水..."
+              className="w-full px-4 py-3.5 rounded-2xl liquid-glass-input text-base font-sans font-chinese outline-none placeholder:text-white/30"
             />
 
             {/* Microphone test section */}
@@ -400,7 +400,7 @@ export default function AiCoachPage() {
                         className="p-4 rounded-2xl bg-black/20 border border-theme-border/40 space-y-1.5 text-xs"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-base font-serif font-bold text-white">
+                          <span className="text-base font-chinese font-bold text-white">
                             {rule.character}
                           </span>
                           <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">

@@ -429,7 +429,7 @@ export default function SettingsPage() {
               <span>Thẻ thử nghiệm kính mờ</span>
               <span className="font-mono">Preview</span>
             </div>
-            <p className="text-lg font-bold text-white font-serif">汉字卡片 · Liquid Glass</p>
+            <p className="text-lg font-bold text-white font-chinese">汉字卡片 · Liquid Glass</p>
             <p className="text-xs text-theme-text-muted leading-relaxed">
               Đây là hiệu ứng phản chiếu ánh sáng và độ mờ thực tế mà bạn sẽ nhìn thấy trên toàn bộ ứng dụng HanziDeck.
             </p>

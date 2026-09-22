@@ -154,25 +154,25 @@ export default function TextParserPage() {
       </div>
 
       {/* Input Area */}
-      <div className="liquid-glass rounded-3xl p-6 shadow-glass border border-white/15 space-y-4">
-        <label className="text-xs font-semibold text-theme-text-muted flex items-center justify-between">
+      <div className="liquid-glass rounded-3xl p-6 shadow-glass border border-white/10 space-y-4">
+        <div className="flex items-center justify-between text-xs font-medium text-white/60">
           <span>Văn bản tiếng Trung đầu vào:</span>
-          <span className="font-mono">{inputText.length} ký tự</span>
-        </label>
+          <span className="font-mono text-white/40">{inputText.length} ký tự</span>
+        </div>
 
         <textarea
           rows={5}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="Dán đoạn văn bản tiếng Trung vào đây (ví dụ: 今天天气很好，我和朋友一起去公园散步...)..."
-          className="w-full px-4 py-3 rounded-2xl liquid-glass-input text-base font-serif leading-relaxed resize-none"
+          placeholder="Dán hoặc nhập đoạn văn tiếng Trung vào đây (ví dụ: 学汉语 / 我每天学汉语)..."
+          className="w-full px-4 py-3.5 rounded-2xl liquid-glass-input text-base font-sans font-chinese leading-relaxed resize-none placeholder:text-white/30 outline-none"
         />
 
         <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
           <button
             type="button"
             onClick={handleClear}
-            className="px-4 py-2 rounded-xl liquid-glass hover:bg-white/15 text-xs text-theme-text-muted flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl liquid-glass hover:bg-white/15 text-xs text-white/60 hover:text-white flex items-center gap-1.5 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Xóa văn bản</span>
@@ -183,7 +183,7 @@ export default function TextParserPage() {
             onClick={handleAnalyze}
             className="liquid-glass-btn px-6 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2"
           >
-            <Sparkles className="w-4 h-4 text-amber-300" />
+            <Sparkles className="w-4 h-4 text-sky-400" />
             <span>Phân tích & Lọc từ mới</span>
           </button>
         </div>
@@ -211,7 +211,7 @@ export default function TextParserPage() {
             </div>
 
             {/* Interactive paragraph rendering */}
-            <div className="p-5 rounded-2xl bg-black/25 border border-theme-border/40 text-lg sm:text-xl font-serif leading-loose tracking-wide flex flex-wrap gap-x-1.5 gap-y-2">
+            <div className="p-5 rounded-2xl bg-black/25 border border-white/10 text-lg sm:text-xl font-chinese leading-loose tracking-wide flex flex-wrap gap-x-1.5 gap-y-2">
               {segments.map((seg, idx) => {
                 if (!seg.isWord) {
                   return (
@@ -342,7 +342,7 @@ export default function TextParserPage() {
                     className="p-3 rounded-xl liquid-glass hover:bg-white/15 border border-amber-400/40 cursor-pointer flex items-center justify-between gap-2 group transition-all"
                   >
                     <div className="flex flex-col">
-                      <span className="font-bold text-lg font-serif text-white group-hover:text-amber-300">
+                      <span className="font-bold text-lg font-chinese text-white group-hover:text-amber-300">
                         {item.word}
                       </span>
                       <span className="text-[10px] text-theme-text-muted">

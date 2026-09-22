@@ -57,7 +57,7 @@ export default function QuizCard({
           </div>
         ) : question.type === 'hanzi_to_meaning' ? (
           <div className="flex flex-col items-center gap-2">
-            <h2 className="text-6xl sm:text-7xl font-bold font-serif text-white tracking-wide">
+            <h2 className="text-6xl sm:text-7xl font-bold font-chinese text-white tracking-wide">
               {question.card.hanzi}
             </h2>
             <div className="flex items-center gap-2">

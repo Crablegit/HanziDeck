@@ -302,8 +302,8 @@ export default function DeckDetailPage({ params }: { params: Promise<{ id: strin
                     required
                     value={hanzi}
                     onChange={(e) => setHanzi(e.target.value)}
-                    placeholder="ví dụ: 学习"
-                    className="w-full px-3 py-2.5 rounded-xl liquid-glass-input text-base font-serif"
+                    placeholder="ví dụ: 学汉语 / 学习"
+                    className="w-full px-3 py-2.5 rounded-xl liquid-glass-input text-base font-sans font-chinese outline-none"
                   />
                 </div>
                 <div>
@@ -370,7 +370,7 @@ export default function DeckDetailPage({ params }: { params: Promise<{ id: strin
                   value={exampleHanzi}
                   onChange={(e) => setExampleHanzi(e.target.value)}
                   placeholder="Câu Chữ Hán (ví dụ: 我们一起学习汉语。)"
-                  className="w-full px-3 py-2 rounded-xl liquid-glass-input text-xs font-serif"
+                  className="w-full px-3 py-2 rounded-xl liquid-glass-input text-xs font-sans font-chinese outline-none"
                 />
                 <input
                   type="text"

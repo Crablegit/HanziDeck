@@ -270,8 +270,8 @@ export default function DailyStackPage() {
               type="text"
               value={manualWord}
               onChange={(e) => setManualWord(e.target.value)}
-              placeholder="Thêm nhanh từ vào Stack (ví dụ: 学习, 朋友, 旅游...)"
-              className="flex-1 px-4 py-2 rounded-xl liquid-glass-input text-xs font-serif"
+              placeholder="Thêm nhanh từ vào Stack (ví dụ: 学汉语 / 学习 / 朋友)..."
+              className="flex-1 px-4 py-2.5 rounded-xl liquid-glass-input text-xs font-sans font-chinese outline-none placeholder:text-white/30"
             />
             <button
               type="submit"
