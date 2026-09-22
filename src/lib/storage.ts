@@ -97,29 +97,16 @@ export function getStoredCards(): Card[] {
       return INITIAL_CARDS;
     }
     const parsed: Card[] = JSON.parse(raw);
-    // If cached cards are fewer than INITIAL_CARDS (like old 12-item cache), merge with INITIAL_CARDS!
-    if (parsed.length < INITIAL_CARDS.length) {
-      const parsedMap = new Map<string, Card>(parsed.map((c) => [c.id, c]));
-      const parsedHanziMap = new Map<string, Card>(parsed.map((c) => [c.hanzi, c]));
-
-      const merged = INITIAL_CARDS.map((card) => {
-        return parsedMap.get(card.id) || parsedHanziMap.get(card.hanzi) || card;
-      });
-
-      // Keep any custom user-added cards
-      const initialIds = new Set(INITIAL_CARDS.map((c) => c.id));
-      const initialHanzis = new Set(INITIAL_CARDS.map((c) => c.hanzi));
-      const customCards = parsed.filter(
-        (c) => !initialIds.has(c.id) && !initialHanzis.has(c.hanzi)
-      );
-
-      const finalCards = [...customCards, ...merged];
+    const parsedHanziMap = new Map<string, Card>(parsed.map((c) => [c.hanzi, c]));
+    const missingInitial = INITIAL_CARDS.filter((c) => !parsedHanziMap.has(c.hanzi));
+    if (missingInitial.length > 0) {
+      const merged = [...parsed, ...missingInitial];
       try {
-        localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(finalCards));
+        localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(merged));
       } catch (e) {
         console.warn('LocalStorage quota warning', e);
       }
-      return finalCards;
+      return merged;
     }
     return parsed;
   } catch {
@@ -325,6 +312,9 @@ export function getKnownWordsSet(): Set<string> {
   const words = new Set<string>(baselineWords);
   for (const card of cards) {
     words.add(card.hanzi);
+    for (const char of card.hanzi) {
+      words.add(char);
+    }
   }
   return words;
 }

@@ -111,6 +111,14 @@ export default function WordModal({ card, isOpen, onClose, onAddedToDeck }: Word
             )}
           </div>
 
+          {/* Compound Breakdown or Notes */}
+          {card.notes && (
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-1.5">
+              <span className="text-amber-300 font-semibold block">Phân tích từ ghép:</span>
+              <p className="text-white/80 leading-relaxed">{card.notes}</p>
+            </div>
+          )}
+
           {/* Radicals */}
           {card.radical && (
             <div className="p-3 rounded-xl bg-black/20 border border-theme-border/60 text-xs">
