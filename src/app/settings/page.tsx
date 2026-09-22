@@ -18,6 +18,8 @@ import {
   Trash2,
   BookOpen,
   Target,
+  Check,
+  X,
 } from 'lucide-react';
 import { COLOR_PROFILES, applyThemeToDocument, getThemeById } from '@/lib/themes';
 import {
@@ -338,20 +340,23 @@ export default function SettingsPage() {
         </form>
 
         {keySavedMessage && (
-          <p className="text-xs text-emerald-300 font-semibold animate-in fade-in">
-            ✓ {t.settings.keyStatusSaved}
+          <p className="text-xs text-emerald-300 font-medium flex items-center gap-1.5 animate-in fade-in">
+            <Check className="w-3.5 h-3.5" />
+            <span>{t.settings.keyStatusSaved}</span>
           </p>
         )}
 
         {testStatus === 'success' && (
-          <p className="text-xs text-emerald-300 font-semibold animate-in fade-in">
-            ✓ {t.settings.testKeySuccess}
+          <p className="text-xs text-emerald-300 font-medium flex items-center gap-1.5 animate-in fade-in">
+            <Check className="w-3.5 h-3.5" />
+            <span>{t.settings.testKeySuccess}</span>
           </p>
         )}
 
         {testStatus === 'fail' && (
-          <p className="text-xs text-rose-300 font-semibold animate-in fade-in">
-            ✕ {t.settings.testKeyFail}
+          <p className="text-xs text-rose-300 font-medium flex items-center gap-1.5 animate-in fade-in">
+            <X className="w-3.5 h-3.5" />
+            <span>{t.settings.testKeyFail}</span>
           </p>
         )}
       </div>
@@ -521,9 +526,9 @@ export default function SettingsPage() {
 
         <div className="grid grid-cols-3 gap-3 pt-2">
           {[
-            { id: 'vi' as Language, label: '🇻🇳 Tiếng Việt', desc: 'Mặc định' },
-            { id: 'en' as Language, label: '🇺🇸 English', desc: 'Standard' },
-            { id: 'zh' as Language, label: '🇨🇳 中文', desc: '简体中文' },
+            { id: 'vi' as Language, label: 'Tiếng Việt', desc: 'Mặc định' },
+            { id: 'en' as Language, label: 'English', desc: 'Standard' },
+            { id: 'zh' as Language, label: '中文', desc: '简体中文' },
           ].map((lang) => (
             <button
               key={lang.id}

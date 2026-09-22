@@ -28,6 +28,7 @@ export default function DeckDetailPage({ params }: { params: Promise<{ id: strin
   const [deck, setDeck] = useState<Deck | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [visibleLimit, setVisibleLimit] = useState(60);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Form state
@@ -208,57 +209,70 @@ export default function DeckDetailPage({ params }: { params: Promise<{ id: strin
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-3">
-            {filteredCards.map((card) => (
-              <div
-                key={card.id}
-                className="liquid-glass-card rounded-2xl p-4 sm:p-5 border border-white/10 shadow-glass flex items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-4 sm:gap-6 flex-1 min-w-0">
-                  {/* Big Character */}
-                  <div className="w-14 h-14 rounded-xl liquid-glass flex items-center justify-center font-bold text-2xl text-white font-serif border border-theme-border shrink-0">
-                    {card.hanzi}
-                  </div>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-3">
+              {filteredCards.slice(0, visibleLimit).map((card) => (
+                <div
+                  key={card.id}
+                  className="liquid-glass-card rounded-2xl p-4 sm:p-5 border border-white/10 shadow-glass flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-4 sm:gap-6 flex-1 min-w-0">
+                    {/* Big Character */}
+                    <div className="w-14 h-14 rounded-xl liquid-glass flex items-center justify-center font-bold text-2xl text-white font-serif border border-theme-border shrink-0">
+                      {card.hanzi}
+                    </div>
 
-                  {/* Character Info */}
-                  <div className="space-y-1 flex-1 min-w-0">
-                    <div className="flex items-center gap-2.5 flex-wrap">
-                      <span className="text-base font-bold font-mono text-amber-300">
-                        {card.pinyin}
-                      </span>
-                      {card.han_viet && (
-                        <span className="text-xs px-2 py-0.5 rounded-md bg-white/10 text-theme-text-muted font-medium">
-                          {card.han_viet}
+                    {/* Character Info */}
+                    <div className="space-y-1 flex-1 min-w-0">
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <span className="text-base font-bold font-mono text-amber-300">
+                          {card.pinyin}
                         </span>
-                      )}
-                      {card.hsk_level && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
-                          HSK {card.hsk_level}
-                        </span>
+                        {card.han_viet && (
+                          <span className="text-xs px-2 py-0.5 rounded-md bg-white/10 text-theme-text-muted font-medium">
+                            {card.han_viet}
+                          </span>
+                        )}
+                        {card.hsk_level && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                            HSK {card.hsk_level}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-white font-medium truncate">{card.meaning_vi}</p>
+                      {card.examples && card.examples[0] && (
+                        <p className="text-xs text-theme-text-muted truncate hidden sm:block">
+                          Ví dụ: {card.examples[0].hanzi} - {card.examples[0].meaning_vi}
+                        </p>
                       )}
                     </div>
-                    <p className="text-sm text-white font-medium truncate">{card.meaning_vi}</p>
-                    {card.examples && card.examples[0] && (
-                      <p className="text-xs text-theme-text-muted truncate hidden sm:block">
-                        Ví dụ: {card.examples[0].hanzi} - {card.examples[0].meaning_vi}
-                      </p>
-                    )}
+                  </div>
+
+                  {/* Right Actions */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <AudioPlayer text={card.hanzi} audioUrl={card.audio_url} size="sm" />
+                    <button
+                      onClick={() => handleDeleteCard(card.id)}
+                      title="Xóa thẻ khỏi bộ"
+                      className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/30 text-rose-300 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                {/* Right Actions */}
-                <div className="flex items-center gap-2 shrink-0">
-                  <AudioPlayer text={card.hanzi} audioUrl={card.audio_url} size="sm" />
-                  <button
-                    onClick={() => handleDeleteCard(card.id)}
-                    title="Xóa thẻ khỏi bộ"
-                    className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/30 text-rose-300 transition-colors"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
+            {filteredCards.length > visibleLimit && (
+              <div className="text-center pt-2">
+                <button
+                  onClick={() => setVisibleLimit((prev) => prev + 60)}
+                  className="liquid-glass-btn px-6 py-2.5 rounded-xl text-xs font-semibold inline-flex items-center gap-2"
+                >
+                  <span>Hiển thị thêm ({filteredCards.length - visibleLimit} từ còn lại)</span>
+                </button>
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>

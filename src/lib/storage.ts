@@ -36,7 +36,29 @@ export function getStoredDecks(): Deck[] {
       localStorage.setItem(STORAGE_KEYS.DECKS, JSON.stringify(INITIAL_DECKS));
       return INITIAL_DECKS;
     }
-    return JSON.parse(raw);
+    const parsed: Deck[] = JSON.parse(raw);
+    const existingIds = new Set(parsed.map((d) => d.id));
+    const missingDecks = INITIAL_DECKS.filter((d) => !existingIds.has(d.id));
+
+    if (missingDecks.length > 0 || parsed.length < INITIAL_DECKS.length) {
+      const merged = INITIAL_DECKS.map((initDeck) => {
+        const found = parsed.find((p) => p.id === initDeck.id);
+        return found
+          ? {
+              ...initDeck,
+              ...found,
+              total_cards: Math.max(initDeck.total_cards, found.total_cards),
+            }
+          : initDeck;
+      });
+      const customDecks = parsed.filter(
+        (p) => !INITIAL_DECKS.some((init) => init.id === p.id)
+      );
+      const finalDecks = [...merged, ...customDecks];
+      localStorage.setItem(STORAGE_KEYS.DECKS, JSON.stringify(finalDecks));
+      return finalDecks;
+    }
+    return parsed;
   } catch {
     return INITIAL_DECKS;
   }
@@ -72,10 +94,34 @@ export function getStoredCards(): Card[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.CARDS);
     if (!raw) {
-      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(INITIAL_CARDS));
       return INITIAL_CARDS;
     }
-    return JSON.parse(raw);
+    const parsed: Card[] = JSON.parse(raw);
+    // If cached cards are fewer than INITIAL_CARDS (like old 12-item cache), merge with INITIAL_CARDS!
+    if (parsed.length < INITIAL_CARDS.length) {
+      const parsedMap = new Map<string, Card>(parsed.map((c) => [c.id, c]));
+      const parsedHanziMap = new Map<string, Card>(parsed.map((c) => [c.hanzi, c]));
+
+      const merged = INITIAL_CARDS.map((card) => {
+        return parsedMap.get(card.id) || parsedHanziMap.get(card.hanzi) || card;
+      });
+
+      // Keep any custom user-added cards
+      const initialIds = new Set(INITIAL_CARDS.map((c) => c.id));
+      const initialHanzis = new Set(INITIAL_CARDS.map((c) => c.hanzi));
+      const customCards = parsed.filter(
+        (c) => !initialIds.has(c.id) && !initialHanzis.has(c.hanzi)
+      );
+
+      const finalCards = [...customCards, ...merged];
+      try {
+        localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(finalCards));
+      } catch (e) {
+        console.warn('LocalStorage quota warning', e);
+      }
+      return finalCards;
+    }
+    return parsed;
   } catch {
     return INITIAL_CARDS;
   }
@@ -83,7 +129,7 @@ export function getStoredCards(): Card[] {
 
 export function saveCard(card: Card): Card[] {
   const cards = getStoredCards();
-  const index = cards.findIndex((c) => c.id === card.id);
+  const index = cards.findIndex((c) => c.id === card.id || c.hanzi === card.hanzi);
   let updated: Card[];
   if (index >= 0) {
     updated = [...cards];
@@ -92,7 +138,11 @@ export function saveCard(card: Card): Card[] {
     updated = [card, ...cards];
   }
   if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(updated));
+    try {
+      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(updated));
+    } catch (e) {
+      console.warn('Storage quota warning', e);
+    }
   }
 
   // Cập nhật lại số lượng thẻ trong Deck
@@ -103,10 +153,15 @@ export function saveCard(card: Card): Card[] {
 export function saveMultipleCards(newCards: Card[]): Card[] {
   const existing = getStoredCards();
   const existingIds = new Set(existing.map((c) => c.id));
-  const toAdd = newCards.filter((c) => !existingIds.has(c.id));
+  const existingHanzis = new Set(existing.map((c) => c.hanzi));
+  const toAdd = newCards.filter((c) => !existingIds.has(c.id) && !existingHanzis.has(c.hanzi));
   const updated = [...toAdd, ...existing];
   if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(updated));
+    try {
+      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(updated));
+    } catch (e) {
+      console.warn('Storage quota warning', e);
+    }
   }
 
   // Update counts for affected decks
@@ -121,7 +176,11 @@ export function deleteCard(cardId: string): Card[] {
   const target = cards.find((c) => c.id === cardId);
   const updated = cards.filter((c) => c.id !== cardId);
   if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(updated));
+    try {
+      localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(updated));
+    } catch (e) {
+      console.warn('Storage quota warning', e);
+    }
   }
   if (target) {
     updateDeckCardCount(target.deck_id);
@@ -136,7 +195,11 @@ function updateDeckCardCount(deckId: string) {
   const idx = decks.findIndex((d) => d.id === deckId);
   if (idx >= 0) {
     decks[idx].total_cards = count;
-    localStorage.setItem(STORAGE_KEYS.DECKS, JSON.stringify(decks));
+    try {
+      localStorage.setItem(STORAGE_KEYS.DECKS, JSON.stringify(decks));
+    } catch (e) {
+      console.warn('Storage quota warning', e);
+    }
   }
 }
 

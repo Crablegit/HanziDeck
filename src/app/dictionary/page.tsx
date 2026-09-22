@@ -83,7 +83,7 @@ export default function DictionaryPage() {
           <span>Tra cứu Từ điển Hanzii</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60">
-          Tra cứu Chữ Hán, Pinyin, Hán Việt, phân tích bộ thủ, số nét và ví dụ câu song ngữ. Tích hợp AI Gemini tra cứu mọi từ vựng HSK 1-6 và thành ngữ.
+          Kho dữ liệu 5.375+ từ vựng chuẩn HSK 1–6 (3.0) & Thành ngữ. Tra cứu Chữ Hán, Pinyin, Hán Việt, phân tích bộ thủ và câu ví dụ song ngữ.
         </p>
       </div>
 
@@ -161,7 +161,7 @@ export default function DictionaryPage() {
       {/* Results Grid */}
       <div className="space-y-3">
         <div className="flex items-center justify-between text-xs text-white/50 px-1">
-          <span>Tìm thấy {results.length} từ vựng</span>
+          <span>Tìm thấy {results.length} từ (trong kho {allCards.length} từ)</span>
           <span>Nhấp vào thẻ để xem chi tiết bộ thủ & lưu vào bộ</span>
         </div>
 

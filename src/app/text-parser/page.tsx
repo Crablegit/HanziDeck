@@ -247,8 +247,9 @@ export default function TextParserPage() {
               })}
             </div>
 
-            <p className="text-xs text-theme-text-muted italic">
-              💡 Mẹo: Nhấp vào bất kỳ từ vựng nào (đặc biệt là các từ màu vàng) để nghe phát âm và xem nghĩa chi tiết.
+            <p className="text-xs text-white/50 flex items-center gap-1.5">
+              <span className="text-white/30 font-medium">Gợi ý:</span>
+              <span>Nhấp vào bất kỳ từ vựng nào (đặc biệt là các từ màu vàng) để nghe phát âm và xem nghĩa chi tiết.</span>
             </p>
           </div>
 

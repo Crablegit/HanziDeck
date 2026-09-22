@@ -37,10 +37,10 @@ export default function QuizCard({
       <div className="flex items-center justify-between text-xs text-theme-text-muted border-b border-theme-border/50 pb-3">
         <span className="font-semibold uppercase tracking-wider text-theme-secondary">
           {question.type === 'hanzi_to_meaning'
-            ? 'Chữ Hán ➔ Nghĩa'
+            ? 'Chữ Hán → Nghĩa'
             : question.type === 'meaning_to_hanzi'
-            ? 'Nghĩa ➔ Chữ Hán'
-            : 'Nghe phát âm ➔ Chữ Hán'}
+            ? 'Nghĩa → Chữ Hán'
+            : 'Nghe phát âm → Chữ Hán'}
         </span>
         <span className="font-mono font-bold">
           Câu {currentIndex + 1} / {totalQuestions}
@@ -126,7 +126,7 @@ export default function QuizCard({
               <XCircle className="w-5 h-5 text-rose-400 shrink-0" />
             )}
             <div>
-              <p className="font-semibold">{isCorrect ? 'Chính xác! 🎉' : 'Chưa chính xác! 💡'}</p>
+              <p className="font-semibold">{isCorrect ? 'Chính xác!' : 'Chưa chính xác!'}</p>
               {!isCorrect && (
                 <p className="text-xs opacity-90">
                   Đáp án đúng là: <strong>{question.correctAnswer}</strong>

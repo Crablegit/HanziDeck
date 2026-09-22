@@ -2,17 +2,35 @@ import { ColorProfile } from '@/types';
 
 export const COLOR_PROFILES: ColorProfile[] = [
   {
+    id: 'minimalist-slate',
+    name: {
+      vi: 'Titan Tối giản (Minimalist Slate)',
+      en: 'Minimalist Slate',
+      zh: '极简岩板 (Minimalist Slate)',
+    },
+    primary: '#38bdf8', // Sky 400
+    primaryHover: '#0284c7',
+    secondary: '#818cf8', // Indigo 400
+    accent: '#38bdf8',
+    bgTint: '#0b0f17',
+    surface: 'rgba(18, 24, 38, 0.65)',
+    text: '#f8fafc',
+    textMuted: '#94a3b8',
+    border: 'rgba(255, 255, 255, 0.08)',
+    isDark: true,
+  },
+  {
     id: 'imperial-jade',
     name: {
-      vi: '🌿 Cẩm Thạch Đế Vương (Imperial Jade)',
-      en: '🌿 Imperial Jade',
-      zh: '🌿 帝王翡翠 (Imperial Jade)',
+      vi: 'Cẩm Thạch (Imperial Jade)',
+      en: 'Imperial Jade',
+      zh: '帝王翡翠 (Imperial Jade)',
     },
-    primary: '#059669', // Emerald 600
+    primary: '#059669',
     primaryHover: '#047857',
-    secondary: '#10b981', // Emerald 500
-    accent: '#d97706', // Amber accent
-    bgTint: '#064e3b', // Deep forest emerald
+    secondary: '#10b981',
+    accent: '#d97706',
+    bgTint: '#064e3b',
     surface: 'rgba(6, 78, 59, 0.45)',
     text: '#f0fdf4',
     textMuted: '#a7f3d0',
@@ -22,13 +40,13 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'forbidden-city',
     name: {
-      vi: '🏮 Tử Cấm Thành (Forbidden City Crimson)',
-      en: '🏮 Forbidden City Crimson',
-      zh: '🏮 紫禁朱砂 (Forbidden City)',
+      vi: 'Tử Cấm Thành (Crimson Gold)',
+      en: 'Forbidden City Crimson',
+      zh: '紫禁朱砂 (Forbidden City)',
     },
-    primary: '#dc2626', // Crimson red
+    primary: '#dc2626',
     primaryHover: '#b91c1c',
-    secondary: '#f59e0b', // Imperial gold
+    secondary: '#f59e0b',
     accent: '#fbbf24',
     bgTint: '#450a0a',
     surface: 'rgba(69, 10, 10, 0.5)',
@@ -40,15 +58,15 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'sakura-blossom',
     name: {
-      vi: '🌸 Hoa Anh Đào (Sakura Blossom)',
-      en: '🌸 Sakura Blossom',
-      zh: '🌸 樱花轻染 (Sakura Blossom)',
+      vi: 'Hoa Anh Đào (Sakura Rose)',
+      en: 'Sakura Blossom',
+      zh: '樱花轻染 (Sakura Blossom)',
     },
-    primary: '#db2777', // Pink 600
+    primary: '#db2777',
     primaryHover: '#be185d',
-    secondary: '#f43f5e', // Rose 500
-    accent: '#9333ea', // Purple accent
-    bgTint: '#500724', // Deep rose
+    secondary: '#f43f5e',
+    accent: '#9333ea',
+    bgTint: '#500724',
     surface: 'rgba(80, 7, 36, 0.45)',
     text: '#fdf2f8',
     textMuted: '#fbcfe8',
@@ -58,15 +76,15 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'cyber-shanghai',
     name: {
-      vi: '⚡ Thượng Hải Neon (Cyber Shanghai)',
-      en: '⚡ Cyber Shanghai Neon',
-      zh: '⚡ 魔都赛博 (Cyber Shanghai)',
+      vi: 'Thượng Hải Neon (Cyber Shanghai)',
+      en: 'Cyber Shanghai',
+      zh: '魔都赛博 (Cyber Shanghai)',
     },
-    primary: '#06b6d4', // Cyan 500
+    primary: '#06b6d4',
     primaryHover: '#0891b2',
-    secondary: '#8b5cf6', // Violet 500
-    accent: '#ec4899', // Pink accent
-    bgTint: '#030712', // Near black
+    secondary: '#8b5cf6',
+    accent: '#ec4899',
+    bgTint: '#030712',
     surface: 'rgba(17, 24, 39, 0.65)',
     text: '#ecfeff',
     textMuted: '#a5f3fc',
@@ -76,15 +94,15 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'deep-ocean',
     name: {
-      vi: '🌊 Đại Dương Thẳm (Deep Ocean)',
-      en: '🌊 Deep Ocean',
-      zh: '🌊 沧海深蓝 (Deep Ocean)',
+      vi: 'Đại Dương (Deep Ocean)',
+      en: 'Deep Ocean',
+      zh: '沧海深蓝 (Deep Ocean)',
     },
-    primary: '#2563eb', // Blue 600
+    primary: '#2563eb',
     primaryHover: '#1d4ed8',
-    secondary: '#0ea5e9', // Sky 500
-    accent: '#14b8a6', // Teal
-    bgTint: '#0f172a', // Slate 900
+    secondary: '#0ea5e9',
+    accent: '#14b8a6',
+    bgTint: '#0f172a',
     surface: 'rgba(15, 23, 42, 0.55)',
     text: '#eff6ff',
     textMuted: '#bfdbfe',
@@ -94,15 +112,15 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'autumn-ginkgo',
     name: {
-      vi: '🍂 Ngân Hạnh Thu (Autumn Ginkgo)',
-      en: '🍂 Autumn Ginkgo',
-      zh: '🍂 金秋银杏 (Autumn Ginkgo)',
+      vi: 'Ngân Hạnh Thu (Autumn Ginkgo)',
+      en: 'Autumn Ginkgo',
+      zh: '金秋银杏 (Autumn Ginkgo)',
     },
-    primary: '#d97706', // Amber 600
+    primary: '#d97706',
     primaryHover: '#b45309',
-    secondary: '#ea580c', // Orange 600
+    secondary: '#ea580c',
     accent: '#f59e0b',
-    bgTint: '#451a03', // Amber 950
+    bgTint: '#451a03',
     surface: 'rgba(69, 26, 3, 0.5)',
     text: '#fffbeb',
     textMuted: '#fde68a',
@@ -112,15 +130,15 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'matcha-zen',
     name: {
-      vi: '🍵 Trà Đạo Zen (Matcha Zen)',
-      en: '🍵 Matcha Zen',
-      zh: '🍵 禅意抹茶 (Matcha Zen)',
+      vi: 'Trà Đạo Zen (Matcha Zen)',
+      en: 'Matcha Zen',
+      zh: '禅意抹茶 (Matcha Zen)',
     },
-    primary: '#65a30d', // Lime 600
+    primary: '#65a30d',
     primaryHover: '#4d7c0f',
-    secondary: '#84cc16', // Lime 500
-    accent: '#eab308', // Yellow
-    bgTint: '#1a2e05', // Lime 950
+    secondary: '#84cc16',
+    accent: '#eab308',
+    bgTint: '#1a2e05',
     surface: 'rgba(26, 46, 5, 0.55)',
     text: '#f7fee7',
     textMuted: '#d9f99d',
@@ -130,15 +148,15 @@ export const COLOR_PROFILES: ColorProfile[] = [
   {
     id: 'midnight-amethyst',
     name: {
-      vi: '🔮 Thạch Anh Đêm (Midnight Amethyst)',
-      en: '🔮 Midnight Amethyst',
-      zh: '🔮 暗夜紫晶 (Midnight Amethyst)',
+      vi: 'Thạch Anh Đêm (Midnight Amethyst)',
+      en: 'Midnight Amethyst',
+      zh: '暗夜紫晶 (Midnight Amethyst)',
     },
-    primary: '#7c3aed', // Violet 600
+    primary: '#7c3aed',
     primaryHover: '#6d28d9',
-    secondary: '#a855f7', // Purple 500
-    accent: '#f43f5e', // Rose
-    bgTint: '#1e1b4b', // Indigo 950
+    secondary: '#a855f7',
+    accent: '#f43f5e',
+    bgTint: '#1e1b4b',
     surface: 'rgba(30, 27, 75, 0.55)',
     text: '#faf5ff',
     textMuted: '#e9d5ff',
@@ -146,35 +164,17 @@ export const COLOR_PROFILES: ColorProfile[] = [
     isDark: true,
   },
   {
-    id: 'minimalist-slate',
-    name: {
-      vi: '🪨 Đá Phiến Tối Giản (Minimalist Slate)',
-      en: '🪨 Minimalist Slate',
-      zh: '🪨 极简岩板 (Minimalist Slate)',
-    },
-    primary: '#64748b', // Slate 500
-    primaryHover: '#475569',
-    secondary: '#94a3b8', // Slate 400
-    accent: '#38bdf8', // Sky
-    bgTint: '#090d16',
-    surface: 'rgba(15, 23, 42, 0.65)',
-    text: '#f8fafc',
-    textMuted: '#cbd5e1',
-    border: 'rgba(148, 163, 184, 0.25)',
-    isDark: true,
-  },
-  {
     id: 'sunset-coral',
     name: {
-      vi: '🌅 Hoàng Hôn San Hô (Sunset Coral)',
-      en: '🌅 Sunset Coral',
-      zh: '🌅 晚霞珊瑚 (Sunset Coral)',
+      vi: 'Hoàng Hôn San Hô (Sunset Coral)',
+      en: 'Sunset Coral',
+      zh: '晚霞珊瑚 (Sunset Coral)',
     },
-    primary: '#f97316', // Orange 500
+    primary: '#f97316',
     primaryHover: '#ea580c',
-    secondary: '#fb7185', // Rose 400
-    accent: '#facc15', // Amber
-    bgTint: '#431407', // Orange 950
+    secondary: '#fb7185',
+    accent: '#facc15',
+    bgTint: '#431407',
     surface: 'rgba(67, 20, 7, 0.5)',
     text: '#fff7ed',
     textMuted: '#fed7aa',
