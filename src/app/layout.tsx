@@ -1,6 +1,20 @@
 import type { Metadata } from 'next';
+import { Inter, Noto_Sans_SC } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+
+const inter = Inter({
+  subsets: ['latin', 'vietnamese'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const notoSansSC = Noto_Sans_SC({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-noto-sc',
+});
 
 export const metadata: Metadata = {
   title: 'HanziDeck - Học từ mới tiếng Trung thông minh',
@@ -18,11 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" className={`${inter.variable} ${notoSansSC.variable}`}>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
-      <body className="antialiased min-h-screen flex flex-col selection:bg-sky-500/30 selection:text-white">
+      <body className={`${inter.className} antialiased min-h-screen flex flex-col selection:bg-sky-500/30 selection:text-white`}>
         <Navbar />
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 sm:py-8">
           {children}

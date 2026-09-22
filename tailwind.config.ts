@@ -41,6 +41,10 @@ export default {
           "50%": { opacity: "0.6" },
         },
       },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        chinese: ['var(--font-noto-sc)', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+      },
     },
   },
   plugins: [],
