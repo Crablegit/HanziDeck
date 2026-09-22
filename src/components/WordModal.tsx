@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Deck } from '@/types';
 import AudioPlayer from './AudioPlayer';
-import { X, Plus, CheckCircle2, BookmarkPlus, Layers, Volume2 } from 'lucide-react';
+import { X, Plus, CheckCircle2, BookmarkPlus, Layers, ChevronDown } from 'lucide-react';
 import { getStoredDecks, pushToDailyStack, saveCard } from '@/lib/storage';
 
 interface WordModalProps {
@@ -23,8 +23,13 @@ export default function WordModal({ card, isOpen, onClose, onAddedToDeck }: Word
     if (isOpen) {
       const d = getStoredDecks();
       setDecks(d);
-      if (d.length > 0 && !selectedDeckId) {
-        setSelectedDeckId(d[0].id);
+      // Mặc định chọn Sổ từ vựng cá nhân (deck-my-vocabulary) để không lưu đè vào HSK chuẩn
+      const defaultDeck =
+        d.find((deck) => deck.id === 'deck-my-vocabulary') ||
+        d.find((deck) => !deck.is_system) ||
+        d[0];
+      if (defaultDeck) {
+        setSelectedDeckId(defaultDeck.id);
       }
       setAddedDeckSuccess(false);
       setAddedStackSuccess(false);
@@ -32,6 +37,9 @@ export default function WordModal({ card, isOpen, onClose, onAddedToDeck }: Word
   }, [isOpen]);
 
   if (!isOpen || !card) return null;
+
+  const customDecks = decks.filter((d) => !d.is_system);
+  const systemDecks = decks.filter((d) => d.is_system);
 
   const handleAddToDeck = () => {
     if (!selectedDeckId) return;
@@ -56,7 +64,7 @@ export default function WordModal({ card, isOpen, onClose, onAddedToDeck }: Word
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="w-full max-w-lg liquid-glass-card rounded-3xl p-6 sm:p-8 shadow-glass-lg border border-white/20 relative max-h-[90vh] overflow-y-auto"
+        className="w-full max-w-lg liquid-glass-card rounded-3xl p-6 sm:p-8 shadow-glass-lg border border-white/20 relative max-h-[90vh] overflow-y-auto overflow-x-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -151,41 +159,65 @@ export default function WordModal({ card, isOpen, onClose, onAddedToDeck }: Word
         </div>
 
         {/* Action Buttons */}
-        <div className="border-t border-theme-border/50 pt-4 flex flex-col gap-3">
+        <div className="border-t border-theme-border/50 pt-4 flex flex-col gap-3.5">
           {/* Add to Deck option */}
-          <div className="flex items-center gap-2">
-            <select
-              value={selectedDeckId}
-              onChange={(e) => setSelectedDeckId(e.target.value)}
-              className="flex-1 px-3 py-2 rounded-xl liquid-glass-input text-xs"
-            >
-              {decks.map((d) => (
-                <option key={d.id} value={d.id} className="bg-slate-900 text-white">
-                  {d.title} ({d.total_cards} từ)
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={handleAddToDeck}
-              disabled={addedDeckSuccess || !selectedDeckId}
-              className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0 ${
-                addedDeckSuccess
-                  ? 'bg-emerald-500/30 text-emerald-200 border border-emerald-400'
-                  : 'liquid-glass-btn'
-              }`}
-            >
-              {addedDeckSuccess ? (
-                <>
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Đã thêm!</span>
-                </>
-              ) : (
-                <>
-                  <BookmarkPlus className="w-3.5 h-3.5" />
-                  <span>Lưu vào bộ</span>
-                </>
-              )}
-            </button>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-white/70 font-medium">Lưu vào bộ từ vựng:</span>
+              <span className="text-[11px] text-emerald-400 font-medium">Khuyên dùng: Sổ từ cá nhân</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <div className="relative flex-1 min-w-0">
+                <select
+                  value={selectedDeckId}
+                  onChange={(e) => setSelectedDeckId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl liquid-glass-input text-xs font-sans truncate appearance-none pr-8 cursor-pointer focus:ring-1 focus:ring-emerald-400/40"
+                >
+                  {customDecks.length > 0 && (
+                    <optgroup label="Sổ từ của bạn (Lưu từ mới)" className="bg-slate-900 text-emerald-400 font-semibold">
+                      {customDecks.map((d) => (
+                        <option key={d.id} value={d.id} className="bg-slate-900 text-white font-normal">
+                          {d.title} ({d.total_cards} từ)
+                        </option>
+                      ))}
+                    </optgroup>
+                  )}
+                  {systemDecks.length > 0 && (
+                    <optgroup label="Bộ từ HSK chuẩn hệ thống (Chỉ đọc)" className="bg-slate-900 text-white/50 font-semibold">
+                      {systemDecks.map((d) => (
+                        <option key={d.id} value={d.id} className="bg-slate-900 text-white/70 font-normal">
+                          {d.title} ({d.total_cards} từ)
+                        </option>
+                      ))}
+                    </optgroup>
+                  )}
+                </select>
+                <ChevronDown className="w-4 h-4 text-white/40 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+
+              <button
+                onClick={handleAddToDeck}
+                disabled={addedDeckSuccess || !selectedDeckId}
+                className={`px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shrink-0 ${
+                  addedDeckSuccess
+                    ? 'bg-emerald-500/30 text-emerald-200 border border-emerald-400'
+                    : 'liquid-glass-btn hover:border-emerald-400/40'
+                }`}
+              >
+                {addedDeckSuccess ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Đã lưu!</span>
+                  </>
+                ) : (
+                  <>
+                    <BookmarkPlus className="w-3.5 h-3.5" />
+                    <span>Lưu vào bộ</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Add to Daily Stack option */}

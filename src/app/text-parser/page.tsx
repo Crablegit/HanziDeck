@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   Check,
   BookOpen,
+  ChevronDown,
 } from 'lucide-react';
 import { segmentChineseText, TokenizedWord } from '@/lib/tokenizer';
 import { getKnownWordsSet, getStoredCards, getStoredDecks, pushMultipleToDailyStack, saveMultipleCards } from '@/lib/storage';
@@ -40,7 +41,11 @@ export default function TextParserPage() {
   useEffect(() => {
     const d = getStoredDecks();
     setDecks(d);
-    if (d.length > 0) setSelectedDeckId(d[0].id);
+    const customDeck =
+      d.find((deck) => deck.id === 'deck-my-vocabulary') ||
+      d.find((deck) => !deck.is_system) ||
+      d[0];
+    if (customDeck) setSelectedDeckId(customDeck.id);
   }, []);
 
   const handleAnalyze = () => {
@@ -287,17 +292,37 @@ export default function TextParserPage() {
               {/* Bulk actions for New Words */}
               {activeTab === 'new' && newWords.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <select
-                    value={selectedDeckId}
-                    onChange={(e) => setSelectedDeckId(e.target.value)}
-                    className="px-3 py-2 rounded-xl liquid-glass-input text-xs"
-                  >
-                    {decks.map((d) => (
-                      <option key={d.id} value={d.id} className="bg-slate-900 text-white">
-                        {d.title}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="relative min-w-0 max-w-xs">
+                    <select
+                      value={selectedDeckId}
+                      onChange={(e) => setSelectedDeckId(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl liquid-glass-input text-xs truncate appearance-none pr-8 cursor-pointer"
+                    >
+                      {decks.filter((d) => !d.is_system).length > 0 && (
+                        <optgroup label="Sổ từ của bạn (Lưu từ mới)" className="bg-slate-900 text-emerald-400 font-semibold">
+                          {decks
+                            .filter((d) => !d.is_system)
+                            .map((d) => (
+                              <option key={d.id} value={d.id} className="bg-slate-900 text-white font-normal">
+                                {d.title}
+                              </option>
+                            ))}
+                        </optgroup>
+                      )}
+                      {decks.filter((d) => d.is_system).length > 0 && (
+                        <optgroup label="Bộ từ HSK chuẩn hệ thống" className="bg-slate-900 text-white/50 font-semibold">
+                          {decks
+                            .filter((d) => d.is_system)
+                            .map((d) => (
+                              <option key={d.id} value={d.id} className="bg-slate-900 text-white/70 font-normal">
+                                {d.title}
+                              </option>
+                            ))}
+                        </optgroup>
+                      )}
+                    </select>
+                    <ChevronDown className="w-3.5 h-3.5 text-white/40 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
 
                   <button
                     type="button"

@@ -382,11 +382,21 @@ export const INITIAL_CARDS: Card[] = [
 
 export const INITIAL_DECKS: Deck[] = [
   {
+    id: 'deck-my-vocabulary',
+    title: 'Sổ từ vựng cá nhân (Từ mới của tôi)',
+    description: 'Nơi lưu trữ các từ vựng mới do bạn tự lưu, trích xuất từ đoạn văn hoặc thêm vào trong quá trình học tập.',
+    total_cards: 0,
+    color_tag: 'emerald',
+    is_system: false,
+    created_at: new Date().toISOString(),
+  },
+  {
     id: 'deck-hsk1',
     title: 'HSK 1 - Chữ Hán & Từ vựng Nền tảng (Chuẩn 3.0)',
     description: 'Bộ từ vựng sơ cấp chuẩn quốc tế HSK 3.0: Chào hỏi, số đếm, gia đình, thời gian, ăn uống, sinh hoạt cơ bản.',
     total_cards: 506 + COMMON_COMPOUND_WORDS.filter((c) => c.hsk_level === 1).length,
     color_tag: 'emerald',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
   {
@@ -395,6 +405,7 @@ export const INITIAL_DECKS: Deck[] = [
     description: 'Từ vựng giao tiếp thực tế hàng ngày: Đi lại, du lịch, mua sắm, hỏi thăm, cảm xúc và các mối quan hệ xã hội.',
     total_cards: 750 + COMMON_COMPOUND_WORDS.filter((c) => c.hsk_level === 2).length,
     color_tag: 'cyan',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
   {
@@ -403,6 +414,7 @@ export const INITIAL_DECKS: Deck[] = [
     description: 'Các từ vựng trung cấp, cấu trúc câu biểu đạt linh hoạt, công việc, học tập, trao đổi ý kiến và lối sống.',
     total_cards: 953 + COMMON_COMPOUND_WORDS.filter((c) => c.hsk_level === 3).length,
     color_tag: 'amber',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
   {
@@ -411,6 +423,7 @@ export const INITIAL_DECKS: Deck[] = [
     description: 'Từ vựng trung cao cấp: Thảo luận sâu rộng về các chủ đề đời sống, công nghệ, văn hóa, kinh tế và môi trường.',
     total_cards: 972,
     color_tag: 'blue',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
   {
@@ -419,6 +432,7 @@ export const INITIAL_DECKS: Deck[] = [
     description: 'Từ vựng cao cấp: Đọc hiểu văn bản học thuật, tin tức báo chí, diễn thuyết lưu loát bằng tiếng Trung chuẩn mực.',
     total_cards: 1059,
     color_tag: 'rose',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
   {
@@ -427,6 +441,7 @@ export const INITIAL_DECKS: Deck[] = [
     description: 'Từ vựng thượng thừa và chuyên ngành: Thành thạo toàn diện mọi lĩnh vực, tư duy và biểu đạt như người bản xứ.',
     total_cards: 1123,
     color_tag: 'indigo',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
   {
@@ -435,6 +450,7 @@ export const INITIAL_DECKS: Deck[] = [
     description: 'Tuyển tập các câu thành ngữ 4 chữ kinh điển, nguồn gốc điển cố và ứng dụng tinh tế trong văn viết.',
     total_cards: 12,
     color_tag: 'purple',
+    is_system: true,
     created_at: new Date().toISOString(),
   },
 ];

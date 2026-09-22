@@ -47,6 +47,7 @@ export function getStoredDecks(): Deck[] {
           ? {
               ...initDeck,
               ...found,
+              is_system: initDeck.is_system,
               total_cards: Math.max(initDeck.total_cards, found.total_cards),
             }
           : initDeck;
@@ -96,10 +97,24 @@ export function getStoredCards(): Card[] {
     if (!raw) {
       return INITIAL_CARDS;
     }
-    const parsed: Card[] = JSON.parse(raw);
+    let parsed: Card[] = JSON.parse(raw);
+
+    // Di chuyển các thẻ do người dùng tự lưu/trích xuất ra khỏi các bộ chuẩn HSK vào Sổ từ vựng cá nhân
+    let hasMigrated = false;
+    parsed = parsed.map((c) => {
+      if (
+        (c.id.startsWith('card-ext-') || c.id.startsWith('card-compound-') || c.id.startsWith('card-custom-')) &&
+        (c.deck_id.startsWith('deck-hsk') || c.deck_id === 'deck-chengyu')
+      ) {
+        hasMigrated = true;
+        return { ...c, deck_id: 'deck-my-vocabulary' };
+      }
+      return c;
+    });
+
     const parsedHanziMap = new Map<string, Card>(parsed.map((c) => [c.hanzi, c]));
     const missingInitial = INITIAL_CARDS.filter((c) => !parsedHanziMap.has(c.hanzi));
-    if (missingInitial.length > 0) {
+    if (missingInitial.length > 0 || hasMigrated) {
       const merged = [...parsed, ...missingInitial];
       try {
         localStorage.setItem(STORAGE_KEYS.CARDS, JSON.stringify(merged));

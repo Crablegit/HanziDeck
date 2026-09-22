@@ -34,6 +34,7 @@ export interface Deck {
   is_public?: boolean;
   color_tag?: string;
   total_cards: number;
+  is_system?: boolean;
   created_at: string;
   updated_at?: string;
 }
