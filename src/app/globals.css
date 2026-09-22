@@ -114,22 +114,25 @@ button {
 /* ================= 3D FLASHCARD PERSPECTIVE (BUG-FREE) ================= */
 .perspective-1000 {
   perspective: 1200px;
+  -webkit-perspective: 1200px;
 }
 
 .transform-style-preserve-3d {
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
 }
 
 .rotate-y-180 {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) !important;
+  -webkit-transform: rotateY(180deg) !important;
 }
 
-/* Flashcard Face: Stand-still on hover, NO translateY, NO rotation on hover */
+/* Flashcard Face: Cố định tuyệt đối khi di chuột, chỉ lật khi người dùng bấm */
 .flashcard-face {
   background: rgba(18, 24, 38, 0.75);
   backdrop-filter: blur(24px) saturate(160%);
@@ -138,7 +141,11 @@ button {
   box-shadow: 
     0 20px 50px 0 rgba(0, 0, 0, 0.45),
     inset 0 1px 2px 0 rgba(255, 255, 255, 0.15);
-  transform: none !important; /* Strictly prevents hover transform conflicts */
+}
+
+.flashcard-face-back {
+  transform: rotateY(180deg) !important;
+  -webkit-transform: rotateY(180deg) !important;
 }
 
 /* Subtle scrollbar */

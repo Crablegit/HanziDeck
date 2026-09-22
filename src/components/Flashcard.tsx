@@ -112,7 +112,7 @@ export default function Flashcard({
           </div>
 
           {/* ================= BACK FACE ================= */}
-          <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flashcard-face rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left overflow-y-auto">
+          <div className="absolute inset-0 w-full h-full backface-hidden flashcard-face flashcard-face-back rotate-y-180 rounded-3xl p-6 sm:p-8 flex flex-col justify-between text-left overflow-y-auto">
             {/* Header info */}
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-3">
